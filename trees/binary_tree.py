@@ -8,6 +8,7 @@ class Node:
     '''
         Represents a Node
     '''
+
     def __init__(self, key):
         self.left = None
         self.right = None
@@ -31,7 +32,7 @@ def inorder_traversal(root):
     '''
     if root:
         inorder_traversal(root.left)
-        print root.val
+        print(root.val, end=" ")
         inorder_traversal(root.right)
 
 
@@ -40,7 +41,7 @@ def preorder_traversal(root):
         stores inorder of root
     '''
     if root:
-        print root.val
+        print(root.val, end=" ")
         preorder_traversal(root.left)
         preorder_traversal(root.right)
 
@@ -52,14 +53,14 @@ def postorder_traversal(root):
     if root:
         postorder_traversal(root.left)
         postorder_traversal(root.right)
-        print root.val
+        print(root.val, end=" ")
 
 
 def search(root, key):
     '''
         searches a key in binary search tree
     '''
-    if key == root.val or not root:
+    if key == (root.val) or not root:
         return root
     if key < root.val:
         return search(root.left, key)
@@ -87,7 +88,7 @@ def insert(root, key):
 
 def delete(root, key):
     '''
-        inserts a key in binary search tree
+        deletes a key in binary search tree
     '''
     if root is None:
         return root
@@ -110,6 +111,21 @@ def delete(root, key):
         root.right = delete(root.right, temp.key)
     return root
 
+def height(root):
+    if not root:
+        return -1
+    return max(height(root.left), height(root.right)) + 1
+
+def diameter(root):
+    if not root:
+        return 0
+    lheight = height(root.left)
+    rheight = height(root.right)
+
+    ldiameter = diameter(root.left)
+    rdiameter = diameter(root.right)
+
+    return max(lheight+rheight+1, max(ldiameter, rdiameter))
 
 if __name__ == "__main__":
     r = Node(50)
@@ -118,14 +134,17 @@ if __name__ == "__main__":
     insert(r, 20)
     insert(r, 40)
     insert(r, 45)
-    # insert(r, 80)
+    insert(r, 80)
 
-    # print "Inorder Traversal"
-    # inorder_traversal(r)
-    # print "Preorder Traversal"
-    # preorder_traversal(r)
-    print "Postrder Traversal"
+    print("Inorder Traversal")
+    inorder_traversal(r)
+    print("\nPreorder Traversal")
+    preorder_traversal(r)
+    print("\nPostrder Traversal")
     postorder_traversal(r)
+    print()
 
     # delete(r, 40)
     # inorder_traversal(r)
+    print("Height of the tree:", height(r))
+    print("Diameter of the tree:", diameter(r))
